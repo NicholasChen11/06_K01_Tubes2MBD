@@ -8,27 +8,42 @@ using namespace std;
 
 int main() {
     try{
+        /* 
+        Tuliskan transaksi-transaksi anda, one(1) berarti
+        Transaksi bernama one dengan id: 1 (id dan nama harus unik)
+        */
         Transaction one(1);
         Transaction two(2);
-        Transaction three(3);
 
+        /* 
+        Action adalah bagian-bagian dari schedule, terdapat 5 jenis aksi:
+        start, read, write, validate, dan finish. read dan write menerima objek terkait 
+        dalam bentuk char, sementara aksi lain tidak memedulikan argumen char(dapat diisi apa saja).
+        
+        Act1(one, "read", 'b') berarti aksi milik dari transaksi "one", dengan metode "read", dengan 
+        objek yang dibaca adalah b. Perhatikan penulisan char menggunakan kutip satu '' agar tidak salah.
+        Pengisian selain dengan metode-metode yang diperbolehkan("read", "write", "start", "validate", dan "finish")
+        akan menghasilkan error.
+        */
         Action act1(one, "start", '-');
-        Action act2(one, "read", 'x'); 
+        Action act2(one, "read", 'b');
         Action act3(two, "start", '-');
-        Action act4(two, "validate", '-');
-        Action act5(two, "write", 'x');
-        Action act6(two, "write", 'y');
-        Action act7(three, "start", '-');
-        Action act8(three, "validate", '-');
-        Action act9(three, "write", 'y');
-        Action act10(one, "validate", '-');
-        Action act11(one, "write", 'y');
-        Action act12(one, "finish", '-');
-        Action act13(two, "finish", '-');
-        Action act14(three, "finish", '-');
+        Action act4(two, "read", 'b');
+        Action act5(two, "read", 'a');
+        Action act6(one, "read", 'a');
+        Action act7(one, "validate", '-');
+        Action act8(one, "finish", 'b');
+        Action act9(two, "validate", 'c');
+        Action act10(two, "write", 'b');
+        Action act11(two, "write", 'a');
+        Action act12(two, "finish", '-');
 
         vector<Action> actions;
 
+        /* 
+        Masukkan seluruh aksi ke dalam actions dengan prosedur push_back().
+        Perhatikan urutan push_back() mengubah urutan schedule.
+        */
         actions.push_back(act1);
         actions.push_back(act2); 
         actions.push_back(act3);
@@ -41,8 +56,8 @@ int main() {
         actions.push_back(act10);
         actions.push_back(act11);
         actions.push_back(act12);
-        actions.push_back(act13);
-        actions.push_back(act14);
+        
+        /* Mulai dari bawah ini jangan diubah */
 
         vector<Transaction> order;
         vector<Transaction> rollback;
@@ -72,13 +87,18 @@ int main() {
             ++i;
         }
 
+        /* 
+        Tambahkan perintah di bawah untuk melihat anatomi transaksi.
+        Perintah tidak mengubah hasil program.
+        */
         one.printData();
         cout << "\n";
         two.printData();
         cout << "\n";
-        three.printData();
-        cout << "\n";
+        
+        /* Mulai dari bawah ini jangan diubah */
 
+        /* Algoritma utama, maap ga elegan */
         bool tFinish = false;
         while(!tFinish) {
             int j = 0;
@@ -132,4 +152,4 @@ int main() {
     }
 
     return 0;
-}
+} 
