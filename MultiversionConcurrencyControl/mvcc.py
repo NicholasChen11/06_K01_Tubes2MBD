@@ -52,6 +52,7 @@ class Action:
 
 
 if __name__ == "__main__":
+    isAbort = False
     n = int(input("Masukkan jumlah data item: "))
     items = []
     itemsI = []
@@ -77,12 +78,12 @@ if __name__ == "__main__":
     for i in tempSchedule:
         i = i.replace("(","").replace(")","")
         action = i[0]
-        if(action != "C" or action != "c"):
+        if(action != "C" and action != "c"):
             item = i[len(i) - 1]
             transaction = i[1:len(i) - 1]
             schedule.append(Action(action,transaction,item))
         else:
-            transaction = i[1:len(i) - 1]
+            transaction = i[1:len(i)]
             schedule.append(Action(action,transaction,""))
     
     while(len(schedule) != 0):
@@ -90,14 +91,24 @@ if __name__ == "__main__":
         print(f"{currA.action}{currA.transaction}({currA.item})")
         location1 = transactionsI.index(currA.transaction)
         currT = transactions[location1]
-        location2 = itemsI.index(currA.item)
-        currI = items[location2]
+        if(currA.action != "C" and currA.action != "c"):
+            location2 = itemsI.index(currA.item)
+            currI = items[location2]
         if(currA.action == "W" or currA.action == "w"):
             result = currI.checkVersionW(currT.ts,currT.name)
+            isAbort = not result
         elif(currA.action == "R" or currA.action == "r"):
             result = currI.checkVersionR(currT.ts,currT.name)
+            isAbort = not result
         elif(currA.action == "C" or currA.action == "c"):
             currT.fin = True
+            print(f"Commit Transaksi {currT.name}")
+        if(isAbort):
+            print("Terdapat transaksi yang di-abort")
+            break
+    if(not(isAbort)):
+        print("Schedule berhasil dijalankan sehingga serializable")
+            
         
         
 
