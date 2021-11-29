@@ -52,6 +52,7 @@ class Action:
 
 
 if __name__ == "__main__":
+    isAbort = False
     n = int(input("Masukkan jumlah data item: "))
     items = []
     itemsI = []
@@ -95,11 +96,19 @@ if __name__ == "__main__":
             currI = items[location2]
         if(currA.action == "W" or currA.action == "w"):
             result = currI.checkVersionW(currT.ts,currT.name)
+            isAbort = not result
         elif(currA.action == "R" or currA.action == "r"):
             result = currI.checkVersionR(currT.ts,currT.name)
+            isAbort = not result
         elif(currA.action == "C" or currA.action == "c"):
             currT.fin = True
             print(f"Commit Transaksi {currT.name}")
+        if(isAbort):
+            print("Terdapat transaksi yang di-abort")
+            break
+    if(not(isAbort)):
+        print("Schedule berhasil dijalankan sehingga serializable")
+            
         
         
 
