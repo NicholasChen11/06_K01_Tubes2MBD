@@ -18,7 +18,13 @@
 1. Buka Folder SerialOptimisticConcurrencyControl
 2. Buka file main.cpp dan perhatikan sunting bagian yang diperlukan untuk testcase lain
 3. Pastikan anda memiliki compiler c++, seperti g++
-4. Buka cmd pada dan masukkan command g++ main.cpp Transaction.cpp Action.cpp -o run
-5. Masukkan command run
+4. Buka cmd pada dan masukkan command 
+   ```shell
+    g++ main.cpp Transaction.cpp Action.cpp -o run
+   ```
+5. Masukkan command 
+   ```shell
+      run
+   ```
 
 ### Multiversion Timestamp Ordering Concurrency Control (MVCC)
